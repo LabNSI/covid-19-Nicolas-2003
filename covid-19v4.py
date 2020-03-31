@@ -63,21 +63,21 @@ def trace_data_for_country(country):
     Prepare lists of datas for x and y axis
     '''
     # x is an empty list
-    x = ___
+    x = []
     # y is an empty list
-    y = ___
+    y = []
     # browse through the country dictionary to get datas.
     # - Keys contain datas for x axis (dates)
     # - Values contain datas for y axis (number of daily cases)
     #for key, value in country.___():
     for key, value in country.items():
         # Filter inappropriate keys
-        if key != 'Province/State' and key !='___' and key != '___' and key != '___':
+        if key != 'Province/State' and key !='Country/Region' and key != 'Lat' and key != 'Long':
             # Add key to the x list
-            x.___(___)
+            x.append(key)
             # add value to the y list.
             # value must be an integer
-            y.___(int(___))
+            y.append(int(value))
     # return a tuple of lists x,y
     return x,y
 
@@ -86,9 +86,9 @@ def trace_data_for_country(country):
 if __name__ == '__main__':
 
     # File name of datas
-    file = "time_series_19-covid-Confirmed.csv"
+    file = "time_series_covid19_confirmed_global.csv"
     # where datas are located
-    url = "https://github.com/CSSEGISandData/COVID-19/raw/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv"
+    url = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv"
 
     if download_file(url,file):
         print(f'Téléchargement du fichier {file} terminé avec succès')
@@ -98,7 +98,7 @@ if __name__ == '__main__':
         # for row in coutries:
         #    print(row['Province/State'], row['Country/Region'])
         chine = data_for_country(countries, 'Hubei', 'China')
-        france = data_for_country(countries, 'France', 'France')
+        france = data_for_country(countries, '', 'France')
         italie = data_for_country(countries, '', 'Italy')
         
         print(chine)
@@ -116,27 +116,28 @@ if __name__ == '__main__':
         plt.plot(x, y, label="Chine")
 
         # Plot datas for France
-        ___
-        ___
+        x , y = trace_data_for_country(france)
+        plt.plot(x, y, label="France")
 
         # Plot datas for Italy
-        ___
-        ___
+        x , y = trace_data_for_country(italie)
+        plt.plot(x, y, label="Italie")
 
         # Add title to graph : "Infectés"
-        ___
+        plt.title('Cas confirmés')
 
         # Add legend to graph
-        plt.___()
+        plt.legend()
         # Show graph
-        plt.___()
+        plt.show()
         # Save the figure as '19-covid-Confimed.png'
-        plt.___('9-covid-Confimed.png')
+        plt.savefig('19-covid-Confimed.png')
         # Close graph
-        plt.___()
+        plt.close()
         
     else:
         print(f'Téléchargement du fichier {file} impossible')
+
 
     
     
